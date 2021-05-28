@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using keeper.Repositories;
+using keeper.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,6 +42,12 @@ namespace keeper.server
 
       services.AddScoped<IDbConnection>(x => CreateDbConnection());
 
+      // REPOS
+      services.AddScoped<AccountsRepository>();
+
+      // BUSINESS LOGIC
+      services.AddScoped<AccountService>();
+
     }
 
     private void ConfigureCors(IServiceCollection services)
@@ -52,7 +61,7 @@ namespace keeper.server
                       .AllowAnyHeader()
                       .AllowCredentials()
                       .WithOrigins(new string[]{
-                        "http://localhost:8080", "http://localhost:8081"
+                        "http://localhost:8080", "http://localhost:8081", "https://localhost:5001"
                   });
               });
       });
@@ -76,7 +85,7 @@ namespace keeper.server
     private IDbConnection CreateDbConnection()
     {
       // NOTE this must match the object structure in appsettings.json
-      string connectionString = Configuration["DB:Connectionstring"];
+      string connectionString = Configuration["DB:gearhost"];
       return new MySqlConnection(connectionString);
     }
 
@@ -88,6 +97,7 @@ namespace keeper.server
         app.UseDeveloperExceptionPage();
         app.UseSwagger();
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "keeper.server v1"));
+        app.UseCors("CorsDevPolicy");
       }
 
       app.UseHttpsRedirection();
