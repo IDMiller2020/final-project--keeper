@@ -47,11 +47,12 @@ namespace keeper.server
       // REPOS
       services.AddScoped<AccountsRepository>();
       services.AddTransient<VaultsRepository>();
+      services.AddTransient<KeepsRepository>();
 
       // BUSINESS LOGIC
       services.AddScoped<AccountService>();
       services.AddTransient<VaultsService>();
-
+      services.AddTransient<KeepsService>();
     }
 
     private void ConfigureCors(IServiceCollection services)
