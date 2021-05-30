@@ -4,6 +4,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using keeper.Repositories;
+using keeper.server.Repositories;
+using keeper.server.Services;
 using keeper.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -44,9 +46,11 @@ namespace keeper.server
 
       // REPOS
       services.AddScoped<AccountsRepository>();
+      services.AddTransient<VaultsRepository>();
 
       // BUSINESS LOGIC
       services.AddScoped<AccountService>();
+      services.AddTransient<VaultsService>();
 
     }
 
