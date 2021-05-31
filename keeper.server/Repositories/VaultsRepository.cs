@@ -27,6 +27,19 @@ namespace keeper.server.Repositories
       return newVault;
     }
 
+    internal Vault Edit(Vault vault)
+    {
+      string sql = @"
+      UPDATE vaults
+      SET
+        name = @Name,
+        description = @Description,
+        isPrivate = @IsPrivate
+      WHERE id = Id;
+      ";
+      _db.Execute(sql, vault);
+      return vault;
+    }
     internal Vault GetByVaultId(int vaultId)
     {
       string sql = @"
@@ -43,5 +56,6 @@ namespace keeper.server.Repositories
         return v;
       }, new { vaultId }, splitOn: "id").FirstOrDefault();
     }
+
   }
 }
