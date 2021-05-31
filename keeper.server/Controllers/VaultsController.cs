@@ -20,19 +20,6 @@ namespace keeper.server.Controllers
     {
       _vaultsService = vaultsService;
     }
-    [HttpGet("{id}")]
-    public ActionResult<List<Vault>> GetByProfileId(int profileId)
-    {
-      try
-      {
-        List<Vault> vaults = _vaultsService.GetVaults(profileId);
-        return Ok(vaults);
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
     [Authorize]
     [HttpPost]
     public async Task<ActionResult<Vault>> Create([FromBody] Vault vaultData)
@@ -48,6 +35,19 @@ namespace keeper.server.Controllers
       catch (Exception e)
       {
 
+        return BadRequest(e.Message);
+      }
+    }
+    [HttpGet("{id}")]
+    public ActionResult<Vault> GetByVaultId(int id)
+    {
+      try
+      {
+        Vault vault = _vaultsService.GetByVaultId(id);
+        return Ok(vault);
+      }
+      catch (Exception e)
+      {
         return BadRequest(e.Message);
       }
     }

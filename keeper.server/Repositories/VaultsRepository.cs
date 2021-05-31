@@ -1,6 +1,8 @@
 using System;
 using System.Data;
+using System.Linq;
 using Dapper;
+using keeper.Models;
 using keeper.server.Models;
 
 namespace keeper.server.Repositories
@@ -23,6 +25,23 @@ namespace keeper.server.Repositories
       ";
       newVault.Id = _db.ExecuteScalar<int>(sql, newVault);
       return newVault;
+    }
+
+    internal Vault GetByVaultId(int vaultId)
+    {
+      string sql = @"
+      SELECT
+      v.*,
+      a.*
+      FROM vaults v
+      JOIN accounts a ON a.id = v.creatorId
+      WHERE v.id = @vaultId
+      ";
+      return _db.Query<Vault, Account, Vault>(sql, (v, a) =>
+      {
+        v.Creator = a;
+        return v;
+      }, new { vaultId }, splitOn: "id").FirstOrDefault();
     }
   }
 }

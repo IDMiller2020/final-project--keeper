@@ -18,9 +18,14 @@ namespace keeper.server.Services
     {
       return _vaultsRepo.Create(vaultData);
     }
-    internal List<Vault> GetVaults(int profileId)
+    internal Vault GetByVaultId(int vaultId)
     {
-      throw new NotImplementedException();
+      Vault vault = _vaultsRepo.GetByVaultId(vaultId);
+      if (vault == null)
+      {
+        throw new Exception("Invalid Vault Id");
+      }
+      return vault;
     }
 
   }
