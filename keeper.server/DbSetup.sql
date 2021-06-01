@@ -29,23 +29,35 @@ CREATE TABLE IF NOT EXISTS keeps(
   keeps INT COMMENT 'Keep Keeps',
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 comment '';
-CREATE TABLE IF NOT EXISTS profiles(
-  id int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
-  create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Create Time',
-  update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Update Time',
-  name VARCHAR (255) COMMENT 'Profile Name',
-  email VARCHAR (255) COMMENT 'Profile Email',
-  picture VARCHAR (255) COMMENT 'Account Picture'
-) default charset utf8 comment '';
+-- ************************************************************
+-- *****Do not create a profiles table, only use accounts.*****
+-- ************************************************************
+-- CREATE TABLE IF NOT EXISTS profiles(
+--   id int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
+--   create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Create Time',
+--   update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Update Time',
+--   name VARCHAR (255) COMMENT 'Profile Name',
+--   email VARCHAR (255) COMMENT 'Profile Email',
+--   picture VARCHAR (255) COMMENT 'Account Picture'
+-- ) default charset utf8 comment '';
+-- ************************************************************
 CREATE TABLE IF NOT EXISTS vaultkeeps(
   id int NOT NULL primary key AUTO_INCREMENT COMMENT 'Primary Key',
   create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Create Time',
   update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Update Time',
-  creatorId INT COMMENT 'FK: Profile Id',
+  creatorId VARCHAR (255) COMMENT 'FK: Account Id',
   vaultId INT COMMENT 'FK: Vault Id',
   keepId INT COMMENT 'FK: Keep Id',
-  FOREIGN KEY (creatorId) REFERENCES profiles(id) ON DELETE CASCADE,
+  FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE,
   FOREIGN KEY (vaultId) REFERENCES vaults(id) ON DELETE CASCADE,
   FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE
 ) default charset utf8 comment '';
-DROP TABLE accounts
+SELECT
+  k.*,
+  p.*
+FROM
+  keeps k
+  JOIN profiles p ON p.id = k.creatorId
+WHERE
+  k.creatorId = "88440d6ea76640508b03e215795939b0";
+DROP TABLE profiles

@@ -55,8 +55,6 @@ namespace keeper.server.Controllers
       }
     }
     [HttpGet("{id}")]
-    // FIXME Account userInfo = await HttpContext.GetUserInfoAsync<Account>(); is returning userInfo = "null".
-    // It works correctly above in the Create method.
     public async Task<ActionResult<Vault>> GetByVaultId(int id)
     {
       try
@@ -64,10 +62,16 @@ namespace keeper.server.Controllers
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
         if (userInfo == null)
         {
-          userInfo.Id = "";
+          String userId = "";
+          Vault vault = _vaultsService.GetByVaultId(id, userId);
+          return Ok(vault);
         }
-        Vault vault = _vaultsService.GetByVaultId(id, userInfo.Id);
-        return Ok(vault);
+        else
+        {
+          String userId = userInfo.Id;
+          Vault vault = _vaultsService.GetByVaultId(id, userId);
+          return Ok(vault);
+        }
       }
       catch (Exception e)
       {

@@ -84,6 +84,22 @@ namespace keeper.server.Repositories
         return keep;
       }, new { keepId }, splitOn: "id").FirstOrDefault();
     }
+    internal IEnumerable<Keep> GetKeepsByProfile(string profileId)
+    {
+      string sql = @"
+      SELECT
+        k.*,
+        a.*
+      FROM keeps k
+      JOIN accounts a ON a.id = k.creatorId
+      WHERE k.creatorId = @profileId;
+      ";
+      return _db.Query<Keep, Account, Keep>(sql, (k, a) =>
+      {
+        k.Creator = a;
+        return k;
+      }, new { profileId }, splitOn: "id");
+    }
 
   }
 }
