@@ -1,5 +1,7 @@
+using System;
 using keeper.Models;
 using keeper.Repositories;
+using keeper.server.Models;
 
 namespace keeper.Services
 {
@@ -27,6 +29,11 @@ namespace keeper.Services
         return _repo.Create(userInfo);
       }
       return profile;
+    }
+
+    internal Profile GetProfileById(string id)
+    {
+      return _repo.GetById(id);
     }
 
     internal Account Edit(Account editData, string userEmail)

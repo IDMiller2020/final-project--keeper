@@ -38,12 +38,35 @@ namespace keeper.server.Controllers
         return BadRequest(e.Message);
       }
     }
-    [HttpGet("{id}")]
-    public ActionResult<Vault> GetByVaultId(int id)
+    [Authorize]
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<string>> DeleteVault(int id)
     {
       try
       {
-        Vault vault = _vaultsService.GetByVaultId(id);
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        _vaultsService.DeleteVault(id, userInfo.Id);
+        return Ok("Vault Successfully Deleted");
+      }
+      catch (Exception e)
+      {
+
+        return BadRequest(e.Message);
+      }
+    }
+    [HttpGet("{id}")]
+    // FIXME Account userInfo = await HttpContext.GetUserInfoAsync<Account>(); is returning userInfo = "null".
+    // It works correctly above in the Create method.
+    public async Task<ActionResult<Vault>> GetByVaultId(int id)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        if (userInfo == null)
+        {
+          userInfo.Id = "";
+        }
+        Vault vault = _vaultsService.GetByVaultId(id, userInfo.Id);
         return Ok(vault);
       }
       catch (Exception e)

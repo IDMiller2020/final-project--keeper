@@ -30,7 +30,7 @@ namespace keeper.server.Repositories
     {
       string sql = @"
       DELETE FROM keeps
-      WHERE id =@keepId
+      WHERE id = @keepId
       LIMIT 1;
       ";
       _db.Execute(sql, new { keepId });

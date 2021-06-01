@@ -27,6 +27,15 @@ namespace keeper.server.Repositories
       return newVault;
     }
 
+    internal void DeleteVault(int vaultId)
+    {
+      string sql = @"
+      DELETE FROM vaults
+      WHERE id = @vaultId
+      LIMIT 1
+      ";
+      _db.Execute(sql, new { vaultId });
+    }
     internal Vault Edit(Vault vault)
     {
       string sql = @"
@@ -40,6 +49,8 @@ namespace keeper.server.Repositories
       _db.Execute(sql, vault);
       return vault;
     }
+
+
     internal Vault GetByVaultId(int vaultId)
     {
       string sql = @"

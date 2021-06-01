@@ -18,25 +18,38 @@ namespace keeper.server.Services
     {
       return _vaultsRepo.Create(vaultData);
     }
-    internal Vault Edit(Vault vaultData, string id)
+    internal void DeleteVault(int vaultId, string userId)
+    {
+      Vault vault = GetByVaultId(vaultId, userId);
+      if (vault.CreatorId != userId)
+      {
+        throw new Exception("You are not allowed to delete a Vault you did not create.");
+      }
+      _vaultsRepo.DeleteVault(vaultId);
+    }
+    internal Vault Edit(Vault vaultData, string userId)
     {
       Vault vault = _vaultsRepo.GetByVaultId(vaultData.Id);
       if (vault == null)
       {
         throw new Exception("Invalid Vault Id");
       }
-      if (vault.CreatorId != id)
+      if (vault.CreatorId != userId)
       {
         throw new Exception("You are not allowed to edit a Vault you did not create.");
       }
       return _vaultsRepo.Edit(vaultData);
     }
-    internal Vault GetByVaultId(int vaultId)
+    internal Vault GetByVaultId(int vaultId, string userId)
     {
       Vault vault = _vaultsRepo.GetByVaultId(vaultId);
       if (vault == null)
       {
         throw new Exception("Invalid Vault Id");
+      }
+      if (vault.IsPrivate && vault.CreatorId != userId)
+      {
+        throw new Exception("You are not allowed to access a private Vault that you did not create.");
       }
       return vault;
     }
