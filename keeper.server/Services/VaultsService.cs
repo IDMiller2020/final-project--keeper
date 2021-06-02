@@ -8,10 +8,12 @@ namespace keeper.server.Services
   public class VaultsService
   {
     private readonly VaultsRepository _vaultsRepo;
+    private readonly VaultKeepsRepository _vaultKeepsRepo;
 
-    public VaultsService(VaultsRepository vaultsRepo)
+    public VaultsService(VaultsRepository vaultsRepo, VaultKeepsRepository vaultKeepsRepo)
     {
       _vaultsRepo = vaultsRepo;
+      _vaultKeepsRepo = vaultKeepsRepo;
     }
 
     internal Vault Create(Vault vaultData)
@@ -54,5 +56,9 @@ namespace keeper.server.Services
       return vault;
     }
 
+    internal IEnumerable<VaultKeepViewModel> GetKeeps(int vaultId)
+    {
+      return _vaultKeepsRepo.GetVaultKeeps(vaultId);
+    }
   }
 }

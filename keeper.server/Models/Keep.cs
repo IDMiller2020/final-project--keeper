@@ -1,14 +1,16 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace keeper.server.Models
 {
   public class Keep
   {
     public int Id { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    [Required]
     public string Name { get; set; }
+    [Required]
     public string Description { get; set; }
+    [Required]
     public string Img { get; set; }
     public int Views { get; set; }
     public int Shares { get; set; }

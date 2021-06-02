@@ -54,6 +54,20 @@ namespace keeper.server.Controllers
         return BadRequest(e.Message);
       }
     }
+    [HttpGet("{vaultId}/keeps")]
+    public ActionResult<IEnumerable<VaultKeepViewModel>> GetVaultKeeps(int vaultId)
+    {
+      try
+      {
+        IEnumerable<VaultKeepViewModel> keeps = _vaultsService.GetKeeps(vaultId);
+        return Ok(keeps);
+      }
+      catch (Exception e)
+      {
+
+        return BadRequest(e.Message);
+      }
+    }
     [HttpGet("{id}")]
     public async Task<ActionResult<Vault>> GetByVaultId(int id)
     {
