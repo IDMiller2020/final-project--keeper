@@ -56,8 +56,13 @@ namespace keeper.server.Services
       return vault;
     }
 
-    internal IEnumerable<VaultKeepViewModel> GetKeeps(int vaultId)
+    internal IEnumerable<VaultKeepViewModel> GetKeeps(int vaultId, string userId)
     {
+      Vault vault = _vaultsRepo.GetByVaultId(vaultId);
+      if (vault.CreatorId != userId && vault.IsPrivate == true)
+      {
+        throw new Exception("Private Vault");
+      }
       return _vaultKeepsRepo.GetVaultKeeps(vaultId);
     }
   }

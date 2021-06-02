@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
+using keeper.Models;
 using keeper.server.Controllers;
 using keeper.server.Models;
 
@@ -40,10 +41,25 @@ namespace keeper.server.Repositories
       _db.Execute(sql, new { id });
     }
 
-    internal IEnumerable<VaultKeepViewModel> GetVaultKeeps(int vaultId)
+
+    internal List<VaultKeepViewModel> GetVaultKeeps(int vaultId)
     {
-      string sql = "SELECT * FROM vaultKeeps WHERE vaultkeeps.vaultId = @vaultId";
-      return _db.Query<VaultKeepViewModel>(sql, new { vaultId }).ToList();
+      string sql = @"
+      SELECT
+      k.*,
+      vk.id as vaultKeepId,
+      a.*
+      FROM vaultKeeps vk
+      JOIN keeps k ON k.id = vk.keepId
+      JOIN accounts a ON a.id = vk.creatorId
+      WHERE vk.vaultId = @vaultId;
+      ";
+      return _db.Query<VaultKeepViewModel, Account, VaultKeepViewModel>(sql, (k, a) =>
+      {
+        k.Creator = a;
+        return k;
+      }, new { vaultId }, splitOn: "id").ToList();
+
     }
   }
 }

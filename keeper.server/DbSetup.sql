@@ -60,4 +60,14 @@ FROM
   JOIN profiles p ON p.id = k.creatorId
 WHERE
   k.creatorId = "88440d6ea76640508b03e215795939b0";
+SELECT
+  k.*,
+  vk.id as vaultKeepId,
+  a.*
+FROM
+  vaultKeeps vk
+  JOIN keeps k ON k.id = vk.keepId
+  JOIN accounts a ON a.id = vk.creatorId
+WHERE
+  vk.vaultId = 194;
 DROP TABLE profiles

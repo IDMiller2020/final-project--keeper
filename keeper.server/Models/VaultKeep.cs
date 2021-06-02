@@ -14,6 +14,7 @@ namespace keeper.server.Models
   }
   public class VaultKeepViewModel : Keep
   {
+    public int VaultKeepId { get; set; }
     // These items imported from Keep model
     // public DateTime CreatedAt { get; set; }
     // public DateTime UpdatedAt { get; set; }

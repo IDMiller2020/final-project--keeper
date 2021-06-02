@@ -55,16 +55,26 @@ namespace keeper.server.Controllers
       }
     }
     [HttpGet("{vaultId}/keeps")]
-    public ActionResult<IEnumerable<VaultKeepViewModel>> GetVaultKeeps(int vaultId)
+    public async Task<ActionResult<IEnumerable<VaultKeepViewModel>>> GetVaultKeeps(int vaultId)
     {
       try
       {
-        IEnumerable<VaultKeepViewModel> keeps = _vaultsService.GetKeeps(vaultId);
-        return Ok(keeps);
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        if (userInfo == null)
+        {
+          string userId = "You are not authorized";
+          IEnumerable<VaultKeepViewModel> keeps = _vaultsService.GetKeeps(vaultId, userId);
+          return Ok(keeps);
+        }
+        else
+        {
+          string userId = userInfo.Id;
+          IEnumerable<VaultKeepViewModel> keeps = _vaultsService.GetKeeps(vaultId, userId);
+          return Ok(keeps);
+        }
       }
       catch (Exception e)
       {
-
         return BadRequest(e.Message);
       }
     }
