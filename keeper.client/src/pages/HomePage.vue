@@ -1,9 +1,6 @@
 <template>
   <div class="home row flex-grow-1">
-    <div class="col d-flex flex-column align-items-center justify-content-center">
-      <p>keeps go here</p>
-      <Keep :keep="keep" v-for="keep in state.keeps" :key="keep.id" />
-    </div>
+    <Keep :keep="keep" v-for="keep in state.keeps" :key="keep.id" />
   </div>
 </template>
 
@@ -15,7 +12,7 @@ export default {
   name: 'Home',
   setup() {
     const state = reactive({
-      keep: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps)
     })
     onMounted(async() => {
       try {
