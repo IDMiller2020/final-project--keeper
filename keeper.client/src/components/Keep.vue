@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-3 px-md-4 px-2 col-6 d-flex flex-column align-items-center justify-content-center">
-    <div class="card bg-dark text-white my-md-4 my-2">
+    <div class="card bg-dark text-white my-md-4 my-2" @click="setActiveKeep(keep.id)" data-toggle="modal" data-target="#keepModal">
       <img :src="keep.img" class="card-img" alt="keep image">
       <div class="card-img-overlay d-flex justify-content-between align-items-end">
         <h5 class="card-title">
@@ -15,6 +15,9 @@
 </template>
 
 <script>
+// import { computed, reactive } from 'vue'
+// import { AppState } from '../AppState'
+import { keepsService } from '../services/KeepsService'
 export default {
   name: 'Keep',
   props: {
@@ -24,9 +27,16 @@ export default {
     }
   },
   setup() {
-    return {}
-  },
-  components: {}
+    // const state = reactive({
+    //   keep: computed(() => AppState.activeKeep)
+    // })
+    return {
+      // state,
+      setActiveKeep(keepId) {
+        keepsService.getKeepById(keepId)
+      }
+    }
+  }
 }
 </script>
 
