@@ -24,7 +24,6 @@ class ProfilesService {
   async getVaultsByProfile(id) {
     try {
       const res = await api.get('api/profiles/' + id + '/vaults')
-      console.log(res.data)
       AppState.profileVaults = res.data
     } catch (error) {
       logger.error('Something went wrong', error)

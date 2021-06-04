@@ -7,8 +7,7 @@
           {{ keep.name }}
         </h5>
         <div class="user-icon">
-          <!-- FIXME Clicking on profile to go to profile page seems to partially activate the Keep Details Modal and requires a page reload on the profile page. -->
-          <router-link :to="{name: 'Profile', params: {id: keep.creatorId}}">
+          <router-link :to="{name: 'Profile', params: {id: keep.creatorId}}" @click.stop="">
             <img class="rounded-circle" :src="keep.creator.picture" alt="keep creator picture" height="50">
           </router-link>
         </div>

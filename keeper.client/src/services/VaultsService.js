@@ -7,6 +7,11 @@ class VaultsService {
     AppState.vaults.push(res.data)
   }
 
+  async deleteVault(vaultId) {
+    await api.delete('api/vaults/' + vaultId)
+    AppState.vaults = AppState.vaults.filter(v => v.id !== vaultId)
+  }
+
   async getVaults() {
     const res = await api.get('api/vaults')
     AppState.vaults = res.data
