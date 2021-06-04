@@ -17,7 +17,7 @@
           </div>
           <div class="col-6 d-flex flex-column align-items-start">
             <h3 class="keep-title">
-              {{ state.activeKeep.name }} - {{ state.activeKeep.id }}
+              {{ state.activeKeep.name }}
             </h3>
             <h5 class="keep-description">
               {{ state.activeKeep.description }}
