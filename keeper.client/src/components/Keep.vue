@@ -7,6 +7,7 @@
           {{ keep.name }}
         </h5>
         <div class="user-icon">
+          <!-- FIXME Clicking on profile to go to profile page seems to partially activate the Keep Details Modal and requires a page reload on the profile page. -->
           <router-link :to="{name: 'Profile', params: {id: keep.creatorId}}">
             <img class="rounded-circle" :src="keep.creator.picture" alt="keep creator picture" height="50">
           </router-link>
@@ -17,8 +18,6 @@
 </template>
 
 <script>
-// import { computed, reactive } from 'vue'
-// import { AppState } from '../AppState'
 import { keepsService } from '../services/KeepsService'
 export default {
   name: 'Keep',
@@ -29,11 +28,7 @@ export default {
     }
   },
   setup() {
-    // const state = reactive({
-    //   keep: computed(() => AppState.activeKeep)
-    // })
     return {
-      // state,
       setActiveKeep(keepId) {
         keepsService.getKeepById(keepId)
       }

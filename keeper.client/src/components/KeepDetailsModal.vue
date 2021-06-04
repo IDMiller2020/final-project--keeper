@@ -46,10 +46,11 @@
           </div>
         </div>
         <div class="modal-footer" v-if="state.activeKeep">
-          <button type="button" class="btn btn-secondary" v-if="state.account.id === state.activeKeep.creatorId">
+          <!-- FIXME After delete an empty modal stays on the page.  Should go back to home page without having to close the modal. -->
+          <button type="button" class="btn btn-secondary" v-if="state.account.id === state.activeKeep.creatorId" @click="deleteKeep(state.activeKeep.id)">
             Delete
           </button>
-          <button type="button" class="btn btn-primary">
+          <button type="button" class="btn btn-primary" v-if="state.user">
             Add To Vault
           </button>
         </div>
@@ -61,6 +62,9 @@
 <script>
 import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
+import { keepsService } from '../services/KeepsService'
+import router from '../router'
+import Notification from '../utils/Notification'
 export default {
   name: 'KeepDetailsModal',
   props: {
@@ -72,10 +76,23 @@ export default {
   setup() {
     const state = reactive({
       activeKeep: computed(() => AppState.activeKeep),
-      account: computed(() => AppState.account)
+      account: computed(() => AppState.account),
+      user: computed(() => AppState.user)
     })
     return {
-      state
+      state,
+      async deleteKeep(keepId) {
+        try {
+          if (await Notification.confirmAction('Are you sure you want to delete this keep?', 'You won\'t be able to reverse this action.', 'warning', 'Yes, Delete')) {
+            await keepsService.deleteKeep(keepId)
+            AppState.activeKeep = null
+            router.push({ name: 'Home' })
+            Notification.toast('Successfully Deleted', 'success')
+          }
+        } catch (error) {
+          Notification.toast(error, 'error')
+        }
+      }
     }
   }
 }
