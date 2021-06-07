@@ -46,7 +46,6 @@
           </div>
         </div>
         <div class="modal-footer" v-if="state.activeKeep">
-          <!-- FIXME After delete an empty modal stays on the page.  Should go back to home page without having to close the modal. -->
           <button type="button" class="btn btn-secondary" v-if="state.account.id === state.activeKeep.creatorId" @click="deleteKeep(state.activeKeep.id)" data-dismiss="modal">
             Delete
           </button>
