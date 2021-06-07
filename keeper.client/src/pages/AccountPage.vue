@@ -25,7 +25,7 @@
             <label for="description">Description</label>
             <textarea class="form-control" id="description" rows="3" v-model="state.newKeep.description"></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" class="btn btn-primary my-4">
             Create
           </button>
         </form>
@@ -33,7 +33,9 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <h2>Add A Vault</h2>
+        <h2 class="mt-4">
+          Add A Vault
+        </h2>
         <form @submit.prevent="createVault">
           <div class="form-group">
             <label for="vaultTitle">Vault Title</label>
@@ -47,7 +49,13 @@
             <label for="description">Description</label>
             <textarea class="form-control" id="description" rows="3" v-model="state.newVault.description"></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" v-model="state.newVault.isPrivate">
+            <label class="form-check-label" for="defaultCheck1">
+              Private
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary my-4">
             Create
           </button>
         </form>

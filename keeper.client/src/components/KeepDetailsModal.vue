@@ -50,9 +50,27 @@
           <button type="button" class="btn btn-secondary" v-if="state.account.id === state.activeKeep.creatorId" @click="deleteKeep(state.activeKeep.id)">
             Delete
           </button>
-          <button type="button" class="btn btn-primary" v-if="state.user">
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary">
+              Add To Vault
+            </button>
+            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item"
+                 v-for="v in state.profileVaults"
+                 :key="v.id"
+                 :vault-prop="v"
+                 @click.prevent="createVaultKeep(v.id, state.activeKeep.id)"
+              >{{ v.name }}</a>
+            </div>
+          </div>
+
+          <!-- <button type="button" class="btn btn-primary" v-if="state.user">
             Add To Vault
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
@@ -65,6 +83,7 @@ import { AppState } from '../AppState'
 import { keepsService } from '../services/KeepsService'
 import router from '../router'
 import Notification from '../utils/Notification'
+import { vaultsService } from '../services/VaultsService'
 export default {
   name: 'KeepDetailsModal',
   props: {
@@ -75,9 +94,11 @@ export default {
   },
   setup() {
     const state = reactive({
+      newVaultKeep: {},
       activeKeep: computed(() => AppState.activeKeep),
       account: computed(() => AppState.account),
-      user: computed(() => AppState.user)
+      user: computed(() => AppState.user),
+      profileVaults: computed(() => AppState.profileVaults)
     })
     return {
       state,
@@ -89,6 +110,13 @@ export default {
             router.push({ name: 'Home' })
             Notification.toast('Successfully Deleted', 'success')
           }
+        } catch (error) {
+          Notification.toast(error, 'error')
+        }
+      },
+      async createVaultKeep(vaultId, keepId) {
+        try {
+          await vaultsService.createVaultKeep(vaultId, keepId)
         } catch (error) {
           Notification.toast(error, 'error')
         }

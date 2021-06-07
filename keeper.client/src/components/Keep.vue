@@ -3,6 +3,11 @@
     <div class="card bg-dark text-white my-md-4 my-2" @click="setActiveKeep(keep.id)" data-toggle="modal" data-target="#keepModal">
       <img :src="keep.img" class="card-img" alt="keep image">
       <div class="card-img-overlay d-flex justify-content-between align-items-end">
+        <div v-if="state.activeVault">
+          <button type="button" class="btn btn-danger btn-sm" @click="deleteVaultKeep(keep.vaultKeepId)" v-if="state.account.id == state.activeVault.creatorId">
+            D
+          </button>
+        </div>
         <h5 class="card-title">
           {{ keep.name }}
         </h5>
@@ -17,7 +22,10 @@
 </template>
 
 <script>
+import { computed, reactive } from 'vue'
+import { AppState } from '../AppState'
 import { keepsService } from '../services/KeepsService'
+import { vaultsService } from '../services/VaultsService'
 export default {
   name: 'Keep',
   props: {
@@ -27,9 +35,18 @@ export default {
     }
   },
   setup() {
+    const state = reactive({
+      account: computed(() => AppState.account),
+      activeVault: computed(() => AppState.activeVault)
+    })
     return {
+      state,
       setActiveKeep(keepId) {
         keepsService.getKeepById(keepId)
+        vaultsService.getProfileVaults(state.account.id)
+      },
+      deleteVaultKeep(vaultKeepId) {
+        vaultsService.deleteVaultKeep(vaultKeepId)
       }
     }
   }

@@ -64,7 +64,8 @@ export default {
     return reactive({
       keeps: computed(() => AppState.profileKeeps),
       profile: computed(() => AppState.profile),
-      vaults: computed(() => AppState.profileVaults)
+      vaults: computed(() => AppState.profileVaults),
+      account: computed(() => AppState.account)
     })
   }
 }
