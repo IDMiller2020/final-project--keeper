@@ -114,12 +114,12 @@ namespace keeper.server
 
       app.UseRouting();
 
-      app.UseDefaultFiles();
-      app.UseStaticFiles();
-
       app.UseAuthentication();
 
       app.UseAuthorization();
+
+      app.UseDefaultFiles();
+      app.UseStaticFiles();
 
 
       app.UseEndpoints(endpoints =>
