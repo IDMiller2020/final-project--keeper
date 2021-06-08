@@ -116,6 +116,7 @@ namespace keeper.server
 
       app.UseAuthentication();
 
+
       app.UseAuthorization();
 
       app.UseDefaultFiles();
