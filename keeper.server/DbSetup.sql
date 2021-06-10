@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS vaults(
   name VARCHAR (255) COMMENT 'Vault Name',
   description VARCHAR (255) COMMENT 'Vault Description',
   isPrivate BOOL COMMENT 'Vault Privacy',
+  img VARCHAR (255) COMMENT 'Vault Image',
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 comment '';
 CREATE TABLE IF NOT EXISTS keeps(
@@ -70,4 +71,7 @@ FROM
   JOIN accounts a ON a.id = vk.creatorId
 WHERE
   vk.vaultId = 194;
-DROP TABLE profiles
+DROP TABLE profiles -- Old DB connection info that was changed in appsettings.Development.json
+  --  "DB": {
+  --    "gearhost": "server=den1.mysql6.gear.host;port=3306;database=mypracticedbbcw;user id=mypracticedbbcw;password=Wi65kZX!eR~4"
+  --  },
