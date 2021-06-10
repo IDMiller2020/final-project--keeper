@@ -83,8 +83,8 @@ namespace keeper.server
       }).AddJwtBearer(options =>
       {
         // NOTE this must match the object structure in appsettings.json
-        options.Authority = $"https://{Configuration["Auth0:Domain"]}/";
-        options.Audience = Configuration["Auth0:Audience"];
+        options.Authority = $"https://{Configuration["AUTH0_DOMAIN"]}/";
+        options.Audience = Configuration["AUTH0_AUDIENCE"];
       });
 
     }

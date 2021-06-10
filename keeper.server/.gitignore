@@ -5,7 +5,7 @@
 
 
 .vscode
-appsettings.*
+appsettings.Development*
 
 # User-specific files
 *.rsuser
