@@ -75,3 +75,6 @@ DROP TABLE profiles -- Old DB connection info that was changed in appsettings.De
   --  "DB": {
   --    "gearhost": "server=den1.mysql6.gear.host;port=3306;database=mypracticedbbcw;user id=mypracticedbbcw;password=Wi65kZX!eR~4"
   --  },
+  --   "DB": {
+  --   "gearhost": "server=SG-ScottsKeeperDb-44860.servers.mongodirector.com;database=KeeperDb;user id=Test;password=Test12345!"
+  -- },
