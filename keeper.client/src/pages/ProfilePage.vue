@@ -31,17 +31,17 @@
       <h3>
         Vaults:
       </h3>
-      <div class="row mb-4">
-        <Vault :vault="vault" v-for="vault in vaults" :key="vault.id" />
-      </div>
+    </div>
+    <div class="row mb-4">
+      <Vault :vault="vault" v-for="vault in vaults" :key="vault.id" />
     </div>
     <div class="row">
       <h3>
         Keeps:
       </h3>
-      <div class="row mb-4">
-        <Keep :keep="keep" v-for="keep in keeps" :key="keep.id" />
-      </div>
+    </div>
+    <div class="row mb-4">
+      <Keep :keep="keep" v-for="keep in keeps" :key="keep.id" />
     </div>
     <KeepDetailsModal />
   </div>

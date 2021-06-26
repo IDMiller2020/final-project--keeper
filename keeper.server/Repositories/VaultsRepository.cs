@@ -20,8 +20,8 @@ namespace keeper.server.Repositories
     internal Vault Create(Vault newVault)
     {
       string sql = @"
-      INSERT INTO vaults(name, description, isPrivate, creatorId)
-      VALUES (@Name, @Description, @IsPrivate, @CreatorId);
+      INSERT INTO vaults(name, description, img, isPrivate, creatorId)
+      VALUES (@Name, @Description, @Img, @IsPrivate, @CreatorId);
       SELECT LAST_INSERT_ID();
       ";
       newVault.Id = _db.ExecuteScalar<int>(sql, newVault);
