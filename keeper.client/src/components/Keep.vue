@@ -1,7 +1,9 @@
 <template>
   <div class="col-md-3 col-6 px-md-4 px-2 d-flex flex-column align-items-center justify-content-center">
     <div class="card bg-dark text-white my-md-4 my-2" @click="setActiveKeep(keep.id)" data-toggle="modal" data-target="#keepModal">
-      <img :src="keep.img" class="card-img" alt="keep image">
+      <div id="keepImageContainer">
+        <img :src="keep.img" class="card-img" alt="keep image">
+      </div>
       <div class="card-img-overlay d-flex justify-content-between align-items-end">
         <div v-if="state.activeVault">
           <button type="button" class="btn btn-danger btn-sm" @click="deleteVaultKeep(keep.vaultKeepId)" v-if="state.account.id == state.activeVault.creatorId">
@@ -54,5 +56,12 @@ export default {
 </script>
 
 <style>
+#keepImageContainer {
+  width: 100%;
+}
 
+#keepImageContainer img {
+  height: 400px;
+  object-fit: cover;
+}
 </style>

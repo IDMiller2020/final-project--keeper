@@ -4,7 +4,9 @@
     <div class="card bg-dark text-white my-md-4 my-2" @click="setActiveVault(vault.id)">
       <!-- <img :src="vault.img" class="card-img" alt="vault image" v-if="vault.img">
       <img src="https://source.unsplash.com/200x250/?nature" alt="generic image" v-else> -->
-      <img :src="vault.img" class="card-img" alt="vault image">
+      <div id="vaultImageContainer">
+        <img :src="vault.img" class="card-img" alt="vault image">
+      </div>
       <div class="card-img-overlay d-flex justify-content-between align-items-end">
         <h5 class="card-title">
           {{ vault.name }}
@@ -44,5 +46,13 @@ export default {
 }
 </script>
 <style>
+#vaultImageContainer {
+  width: 100%;
+}
+
+#vaultImageContainer img {
+  height: 400px;
+  object-fit: cover;
+}
 
 </style>
