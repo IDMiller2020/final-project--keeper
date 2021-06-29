@@ -36,24 +36,11 @@ import { vaultsService } from '../services/VaultsService'
 import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
 export default {
-  // props: {
-  //   account: {
-  //     type: Object,
-  //     default() {
-  //       return{
-  //         id: ''
-  //       }
-  //     }
-  //   }
-  // }
   setup() {
     const route = useRoute()
     watchEffect(() => {
       vaultsService.getVaultById(route.params.id)
       vaultsService.getKeeps(route.params.id)
-      // if (route.params.id === account.id){
-
-      // }
     })
     return {
       vault: computed(() => AppState.activeVault),
